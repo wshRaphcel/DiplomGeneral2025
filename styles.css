@@ -1,0 +1,12 @@
+body {
+    background-color: #f8c484;
+    font-family: Arial, Helvetica, sans-serif;
+}
+h1 {
+    color:brown;
+    text-decoration: underline;
+}
+p {
+    font-size: 24pt;
+    color: white;
+}
