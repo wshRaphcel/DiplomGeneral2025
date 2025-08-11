@@ -1,2 +1,4 @@
 secret.txt
 secret
+.env
+/vendor/
