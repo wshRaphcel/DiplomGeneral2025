@@ -1,16 +1,8 @@
 <?php
-$title = "Home Page";
-?>
-<!DOCTYPE html>
-<html lang="en">
+require('vendor/autoload.php');
 
-<?php include "includes/head.php"; ?>
-<body>
-    <?php include "includes/nav.php"; ?>
-    <?php
-    echo "<h1>Hello World</h1>";
-    $message = "Hey there!";
-    echo "<p>$message</p>";
-    ?>
-</body>
-</html>
+use Jm\webproject\App;
+
+// create an app object based on App class
+$app = new App();
+?>
