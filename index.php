@@ -2,13 +2,19 @@
 require('vendor/autoload.php');
 
 use Jm\Webproject\App;
+use Jm\Webproject\Book;
 
 // create an app object based on App class
 $app = new App();
-// print out the environment variables
-//print_r($_ENV);
+
 $title = "Home Page";
 $message = "Hello there";
+
+// create an instance of the book class
+$cls_book = new Book();
+$books = $cls_book -> getBooks();
+// check if we have book data
+print_r($books);
 
 // create a template loader
 $loader = new \Twig\Loader\FilesystemLoader('templates');
