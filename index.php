@@ -8,7 +8,7 @@ use Jm\Webproject\Book;
 $app = new App();
 
 $title = "Home Page";
-$message = "Hello there";
+$message = "Browse our books";
 
 // create an instance of the book class
 $cls_book = new Book();
