@@ -7,9 +7,18 @@ use Jm\Webproject\Account;
 // create an app object based on App class
 $app = new App();
 
-$title = "Welcome the the Uni Library";
+$title = "Signup to the Uni Library";
 $message = "Join or community";
 
+if( $_SERVER["REQUEST_METHOD"] == "POST" ) {
+    $username = $_POST["username"];
+    $email = $_POST["email"];
+    $password1 = $_POST["password"];
+    $password2 = $_POST["confirm-password"];
+
+    $account = new Account();
+    $signup = $account -> create($email,$password,$username,"Test","User");
+}
 
 // create a template loader
 $loader = new \Twig\Loader\FilesystemLoader('templates');
