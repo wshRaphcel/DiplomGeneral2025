@@ -7,18 +7,41 @@ use Jm\Webproject\Account;
 // create an app object based on App class
 $app = new App();
 
-$title = "Signup to the Uni Library";
-$message = "Join or community";
+$title = "Sign up to UniLibrary";
+$message = "Join our website";
+$success = null;
+if( empty($_SESSION["username"]) ) {
+    $user = null;
+}
+else {
+    $user = $_SESSION["username"];
+}
 
 if( $_SERVER["REQUEST_METHOD"] == "POST" ) {
+    $first = $_POST["first"];
+    $last = $_POST["last"];
     $username = $_POST["username"];
     $email = $_POST["email"];
-    $password1 = $_POST["password"];
-    $password2 = $_POST["confirm-password"];
-
+    $password = $_POST["password"];
+    // $password2 = $_POST["confirm-password"];
+    print_r($_POST);
     $account = new Account();
-    $signup = $account -> create($email,$password,$username,"Test","User");
+    $signup = $account -> create($email,$password,$username,$first,$last);
+    // check if signup is successful
+    if( $signup == true ) {
+        // success
+        $success = true;
+        $_SESSION["email"] = $email;
+        $_SESSION["username"] = $username;
+        // update the user variable
+        $user = $_SESSION["username"];
+    }
+    else {
+        // failed
+        $success = false;
+    }
 }
+
 
 // create a template loader
 $loader = new \Twig\Loader\FilesystemLoader('templates');
@@ -28,6 +51,8 @@ $template = $twig -> load('signup.html.twig');
 // add some variables for twig to render
 echo $template -> render([
     'title' => $title,
-    'message' => $message
+    'message' => $message,
+    'success' => $success,
+    'user' => $user
 ]);
 ?>

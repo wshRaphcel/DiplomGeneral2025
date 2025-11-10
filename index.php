@@ -25,6 +25,7 @@ $template = $twig -> load('index.html.twig');
 echo $template -> render([
     'title' => $title,
     'message' => $message,
-    'books' => $books
+    'books' => $books,
+    'user' => $user
 ]);
 ?>

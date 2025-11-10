@@ -10,6 +10,7 @@ $app = new App();
 $title = "Detail Page";
 $message = "Hello there";
 
+
 // create an instance of the book class
 $cls_book = new Book();
 
@@ -26,7 +27,8 @@ if (isset($_GET["id"])) {
     // add some variables for twig to render
     echo $template->render([
         'title' => $book_detail["Title"],
-        'book' => $book_detail
+        'book' => $book_detail,
+        'user' => $user
     ]);
 } else {
     header("location: index.php");
