@@ -7,8 +7,8 @@ use Jm\Webproject\Account;
 // create an app object based on App class
 $app = new App();
 
-$title = "Sign up to UniLibrary";
-$message = "Join our website";
+$title = "Sign in to UniLibrary";
+$message = "Sign in to your account";
 $success = null;
 if( empty($_SESSION["username"]) ) {
     $user = null;
@@ -18,23 +18,21 @@ else {
 }
 
 if( $_SERVER["REQUEST_METHOD"] == "POST" ) {
-    $first = $_POST["first"];
-    $last = $_POST["last"];
-    $username = $_POST["username"];
+    // print_r($_POST);
     $email = $_POST["email"];
     $password = $_POST["password"];
-    // $password2 = $_POST["confirm-password"];
-    // print_r($_POST);
+
     $account = new Account();
-    $signup = $account -> create($email,$password,$username,$first,$last);
+    $signin = $account -> login($email, $password);
+    print_r ($signin);
     // check if signup is successful
-    if( $signup == true ) {
+    if( $signin ) {
         // success
         $success = true;
-        $_SESSION["email"] = $email;
-        $_SESSION["username"] = $username;
+        // $_SESSION["email"] = $email;
+        // $_SESSION["username"] = $username;
         // update the user variable
-        $user = $_SESSION["username"];
+        // $user = $_SESSION["username"];
     }
     else {
         // failed
@@ -47,7 +45,7 @@ if( $_SERVER["REQUEST_METHOD"] == "POST" ) {
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment( $loader );
 // load the template into memory
-$template = $twig -> load('signup.html.twig');
+$template = $twig -> load('signin.html.twig');
 // add some variables for twig to render
 echo $template -> render([
     'title' => $title,

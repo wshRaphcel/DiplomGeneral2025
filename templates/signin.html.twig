@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'partials/head.html.twig' %}
+
+<body>
+    {% include 'partials/navbar.html.twig' %}
+    <div class="container mt-4">
+        <h2 class="text-center">{{message}}</h2>
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
+                <form id="signup" class="mt-4" action="/signin.php" method="post" novalidate>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input name="password" type="password" class="form-control" id="password"
+                            placeholder="Enter your password">
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary w-100">Sign in</button>
+                <!-- <button type="reset">Reset</button> -->
+            </div>
+            <!-- alert -->
+            {% if success == true %}
+            <div class="alert alert-success" role="alert">
+                Sign in successful. Check out our
+                <a href="/"> books</a>
+            </div>
+            {% elseif success is null%}
+            <div></div>
+            {% elseif success == false %}
+            <div class="alert alert-danger" role="alert">
+                Sign up unsuccessful
+            </div>
+            {% endif %}
+            </form>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>
