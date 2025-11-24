@@ -16,29 +16,28 @@
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
                         <input name="password" type="password" class="form-control" id="password"
-                            placeholder="Enter your password">
+                            placeholder="your password">
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary w-100">Sign in</button>
+                        <!-- <button type="reset">Reset</button> -->
+                    </div>
+                    <!-- alert -->
+                    {% if success == true %}
+                    <div class="alert alert-success" role="alert">
+                        {{response}}. Check out our 
+                        <a href="/"> books</a>
+                    </div>
+                    {% elseif success is null %} 
+                    <div></div>
+                    {% elseif success == false %}
+                    <div class="alert alert-danger" role="alert">
+                        {{response}}
+                    </div>
+                    {% endif %}
+                </form>
             </div>
-            <div class="mb-3">
-                <button type="submit" class="btn btn-primary w-100">Sign in</button>
-                <!-- <button type="reset">Reset</button> -->
-            </div>
-            <!-- alert -->
-            {% if success == true %}
-            <div class="alert alert-success" role="alert">
-                Sign in successful. Check out our
-                <a href="/"> books</a>
-            </div>
-            {% elseif success is null%}
-            <div></div>
-            {% elseif success == false %}
-            <div class="alert alert-danger" role="alert">
-                Sign up unsuccessful
-            </div>
-            {% endif %}
-            </form>
         </div>
     </div>
-    </div>
 </body>
-
 </html>
