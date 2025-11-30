@@ -4,19 +4,36 @@ require('vendor/autoload.php');
 use Jm\Webproject\App;
 use Jm\Webproject\Loan;
 
+// create an app object based on App class
 $app = new App();
 
+// variables for the page
 $title = "User Dashboard";
 $message = "User Dashboard";
+$type = null;
+$user = null;
 
-if (empty($_SESSION['email'])) {
+// check if the user is authenticated
+// if not redirect to signin
+if( empty($_SESSION['email']) ) {
     header("location: /signin.php");
 }
+// username
+if( !empty($_SESSION["username"]) ) {
+    $user = $_SESSION["username"];
+}
 
+// user type
+if( !empty($_SESSION["type"] ) ) {
+    $type = $_SESSION["type"];
+}
+// get user loans
 $account_id = $_SESSION["account_id"];
+// initialise loan class
 $loan = new Loan();
 $user_loans = $loan -> getLoansByAccount($account_id);
 
+// create a template loader
 $loader = new \Twig\Loader\FilesystemLoader('templates');
 $twig = new \Twig\Environment( $loader );
 // load the template into memory
@@ -25,6 +42,8 @@ $template = $twig -> load('userdashboard.html.twig');
 echo $template -> render([
     'title' => $title,
     'message' => $message,
-    'userloans' => $user_loans
+    'userloans' => $user_loans,
+    'type' => $type,
+    'user' => $user
 ]);
 ?>

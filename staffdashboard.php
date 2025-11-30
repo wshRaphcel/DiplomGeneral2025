@@ -1,29 +1,38 @@
-<?php
-require('vendor/autoload.php');
+<!DOCTYPE html>
+<html lang="en">
+{% include 'partials/head.html.twig' %}
 
-use Jm\Webproject\App;
-use Jm\Webproject\Loan;
+<body>
+    {% include 'partials/navbar.html.twig' %}
+    <div class="container mt-4">
+        <h2 class="text-center">{{message}}</h2>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Borrowed</th>
+                            <th scope="col">Due Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for book in userloans %}
+                        <tr scope="row">
+                            <!-- <div class="col">{{book.BookId}}</div> -->
+                            <td>{{book.Title}}</td>
+                            <td>{{book.BorrowDate | date("l d F Y")}}</td>
+                            <td>{{book.DueDate | date("l d F Y")}}</td>
+                            <td>
+                                <button class="btn btn-primary" type="submit">Mark as returned</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
 
-$app = new App();
-
-$title = "Staff Dashboard";
-$message = "Staff Dashboard";
-
-if (empty($_SESSION['email'] || empty($_SESSION['account_id']) ) ) {
-    header("location: /signin.php");
-}
-
-$account_id = $_SESSION["account_id"];
-$loan = new Loan();
-$user_loans = $loan->getOustandingLoans();
-
-$loader = new \Twig\Loader\FilesystemLoader('templates');
-$twig = new \Twig\Environment($loader);
-// load the template into memory
-$template = $twig->load('staffdashboard.html.twig');
-// add some variables for twig to render
-echo $template->render([
-    'title' => $title,
-    'message' => $message,
-    'userloans' => $user_loans
-]);
+</html>

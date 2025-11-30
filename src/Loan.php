@@ -1,52 +1,52 @@
 <?php
-
 namespace Jm\Webproject;
 
 use \Exception;
 use Jm\Webproject\Database;
 
-class Loan extends Database
-{
+class Loan extends Database {
     public function __construct()
     {
-        return parent::__construct();
+        parent::__construct();
     }
-    public function getLoansByAccount($account_id)
-    {
+
+    public function getLoansByAccount($account_id) {
         $query = "
-            SELECT
+            SELECT  
             LoanId,
             BookId,
             BorrowDate,
             DueDate,
             ReturnDate,
             Title
-            FROM Loan
+            FROM Loan 
             INNER JOIN Book
             ON Loan.BookId = Book.id
-            WHERE AccountId = ?    
+            WHERE AccountId = ?
         ";
-        $statement = $this->connection->prepare($query);
-        $statement->bind_param("i", $account_id);
+        $statement = $this -> connection -> prepare($query);
+        $statement -> bind_param("i",$account_id);
         try {
-            if (!$statement->execute()) {
+            if( !$statement -> execute() ) {
                 throw new Exception("Database error");
-            } else {
-                $result = $statement->get_result();
+            }
+            else {
+                $result = $statement -> get_result();
                 $user_loans = array();
-                while ($row = $result->fetch_assoc()) {
+                while( $row = $result -> fetch_assoc() ) {
                     array_push($user_loans, $row);
                 }
                 return $user_loans;
             }
-        } catch (Exception $e) {
-            echo $e->getMessage();
+        }
+        catch(Exception $e) {
+            echo $e -> getMessage();
             return false;
         }
     }
 
-    public function getOustandingLoans()
-    {
+    public function getOutstandingLoans () {
+        // get all the books that have not been returned
         $query = "
         SELECT
         LoanId,
@@ -58,29 +58,49 @@ class Loan extends Database
         Username,
         Email,
         ReturnDate
-        FROM Loan
+        FROM Loan 
         INNER JOIN Book
-        On Loan.BookId = Book.id
+        ON Loan.BookId = Book.id
         INNER JOIN Account
         ON Loan.AccountId = Account.id
         WHERE ReturnDate IS NULL
         ";
 
-        $statement = $this->connection->prepare($query);
+        $statement = $this -> connection -> prepare($query);
         try {
-            if (!$statement->execute()) {
+            if( !$statement -> execute() ) {
                 throw new Exception("Database error");
-            } else {
-                $result = $statement->get_result();
+            }
+            else {
+                $result = $statement -> get_result();
                 $loans = array();
-                while ($row = $result->fetch_assoc()) {
-                    array_push($loans, $row);
+                while( $row = $result -> fetch_assoc() ) {
+                    array_push( $loans, $row );
                 }
                 return $loans;
             }
-        } catch (Exception $e) {
-            echo $e->getMessage();
+        } catch(Exception $e) {
+            echo $e -> getMessage();
             return false;
         }
     }
-}
+
+    public function returnBook($loan_id) {
+        $query = "
+        UPDATE Loan Set ReturnDate=NOW() WHERE LoanId = ?
+        ";
+        $statement = $this -> connection -> prepare($query);
+        $statement -> bind_param("i", $loan_id );
+        try {
+            if( !$statement -> execute() ) {
+                throw new Exception("Database error");
+            }
+            else {
+                return true;
+            }
+        } catch(Exception $e ) {
+            return false;
+        }
+    }
+} 
+?>

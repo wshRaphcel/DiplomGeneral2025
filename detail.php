@@ -7,9 +7,26 @@ use Jm\Webproject\Book;
 // create an app object based on App class
 $app = new App();
 
+// variables for the page
 $title = "Detail Page";
 $message = "Hello there";
+$type = null;
+$user = null;
+$account_id = null;
 
+// username
+if( !empty($_SESSION["username"]) ) {
+    $user = $_SESSION["username"];
+}
+
+// user type
+if( !empty($_SESSION["type"] ) ) {
+    $type = $_SESSION["type"];
+}
+// account id
+if(!empty($_SESSION['account_id'])) {
+    $account_id = $_SESSION["account_id"];
+}
 
 // create an instance of the book class
 $cls_book = new Book();
@@ -28,7 +45,9 @@ if (isset($_GET["id"])) {
     echo $template->render([
         'title' => $book_detail["Title"],
         'book' => $book_detail,
-        'user' => $user
+        'user' => $user,
+        'type' => $type,
+        'account_id' => $account_id
     ]);
 } else {
     header("location: index.php");

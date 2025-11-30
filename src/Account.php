@@ -36,13 +36,18 @@ class Account extends Database
                 throw new Exception("Oops! Something is wrong");
             } else {
                 // account is created
-                return true;
+                $this -> response["success"] = true;
+                $this -> response["message"] = "Account is successfully created";
+                $this -> response["account_id"] = $this -> connection -> insert_id;
+                return $this -> response;
             }
         } catch (Exception $e) {
             // do something
-            echo $e->getMessage();
+            //echo $e->getMessage();
             // failure to create account
-            return false;
+            $this -> response["success"] = false;
+            $this -> response["message"] = $e -> getMessage();
+            return $this -> response;
         }
     }
 
@@ -67,8 +72,8 @@ class Account extends Database
         $statement = $this->connection->prepare($query);
         $statement -> bind_param("s", $email);
         try {
-            if(!$statement -> execute()) {
-                throw new Exception("database error");
+            if( !$statement -> execute() ) {
+                throw new Exception("Database error");
             }
             // check if account exists
             $result = $statement -> get_result();
