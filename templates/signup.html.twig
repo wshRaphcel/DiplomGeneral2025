@@ -31,15 +31,15 @@
                         <label for="email" class="form-label">Email address</label>
                         <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com">
                         <div class="invalid-feedback">
-                            Please enter a valid email address
+                            please enter a valid email address
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
                         <input name="password" type="password" class="form-control" id="password"
-                            placeholder="minimum 10 characters">
+                            placeholder="minimum 8 characters">
                         <div class="invalid-feedback">
-                            The password has to be at least 10 characters
+                            password has to be at least 8 characters
                         </div>
                     </div>
                     <div class="mb-3">
@@ -47,7 +47,7 @@
                         <input name="confirm-password" type="password" class="form-control" id="confirm-password"
                             placeholder="confirm your password">
                         <div class="invalid-feedback">
-                            The passwords don't match
+                            passwords don't match
                         </div>
                     </div>
                     <div class="mb-3">
@@ -57,14 +57,14 @@
                     <!-- alert -->
                     {% if success == true %}
                     <div class="alert alert-success" role="alert">
-                        Sign up successful. Check out our 
+                        Sign up successful. Check out our
                         <a href="/"> books</a>
                     </div>
-                    {% elseif success is null%}
+                    {% elseif success is null %}
                     <div></div>
                     {% elseif success == false %}
                     <div class="alert alert-danger" role="alert">
-                        Sign up unsuccessful
+                        Sign up unsuccessful. {{response}}
                     </div>
                     {% endif %}
                 </form>

@@ -11,15 +11,15 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Title</th>
-                            <th>Borrowed</th>
-                            <th>Due Date</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Borrowed</th>
+                            <th scope="col">Due Date</th>
                         </tr>
                     </thead>
                     <tbody>
-
                         {% for book in userloans %}
                         <tr scope="row">
+                            <!-- <div class="col">{{book.BookId}}</div> -->
                             <td>{{book.Title}}</td>
                             <td>{{book.BorrowDate | date("l d F Y")}}</td>
                             <td>{{book.DueDate | date("l d F Y")}}</td>

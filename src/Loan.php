@@ -23,6 +23,7 @@ class Loan extends Database {
             INNER JOIN Book
             ON Loan.BookId = Book.id
             WHERE AccountId = ?
+            AND ReturnDate IS NULL
         ";
         $statement = $this -> connection -> prepare($query);
         $statement -> bind_param("i",$account_id);
@@ -100,6 +101,28 @@ class Loan extends Database {
             }
         } catch(Exception $e ) {
             return false;
+        }
+    }
+
+    public function borrow($book_id,$account_id) {
+        $query = "
+        INSERT INTO Loan
+        (BookId,AccountId,BorrowDate)
+        VALUES
+        (?,?,NOW() )
+        ";
+        $statement = $this -> connection -> prepare($query);
+        $statement -> bind_param("ii",$book_id,$account_id);
+        try {
+            if(!$statement -> execute() ) {
+                throw new Exception("Database error");
+            }
+            else {
+                return true;
+            }
+        } catch(Exception $e) {
+            return false;
+            echo $e -> getMessage();
         }
     }
 } 
